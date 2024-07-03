@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { Link, useNavigation } from 'expo-router';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button, LinearProgress, Image } from '@rneui/themed';
 import { CheckBox, Input } from '@rneui/base';
@@ -74,22 +74,24 @@ export default function HomeScreen() {
           <View style={{alignItems: "center"}}>
             <Image
               source={require('../../assets/images/baby.png')}
-              style={{width: 230, height: 204.5, marginBottom: 90, marginTop: 100}}
+              style={{width: 230, height: 204.5, marginBottom: 70, marginTop: 120}}
             />
-            <Text style={[styles.headingText, {paddingTop: 0, textAlign: "center", fontSize: 36}]}>Add new data</Text>
-            <Input
-                labelStyle={styles.label}
-                inputStyle={styles.input}
-                placeholderTextColor="#B7B7B7"
-                label="Server address"
-                placeholder="http://192.168.0.2:8000"
-                leftIcon={<Icon name="dns" size={20} color="#B7B7B7"/>}
-                inputContainerStyle={styles.inputContainer}
-                leftIconContainerStyle={styles.iconContainer}
-                // value={state.server_url || ""}
-                onChangeText={setServerUrl}
-                errorMessage={errorServerUrl}
-            />
+            <Text style={[styles.headingText, {paddingTop: 0, paddingBottom: 16, textAlign: "center", fontSize: 36}]}>Add new data</Text>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={64} style={{width: "100%"}}>
+              <Input
+                  labelStyle={styles.label}
+                  inputStyle={styles.input}
+                  placeholderTextColor="#B7B7B7"
+                  label="Server address"
+                  placeholder="http://192.168.0.2:8000"
+                  leftIcon={<Icon name="dns" size={20} color="#B7B7B7"/>}
+                  inputContainerStyle={styles.inputContainer}
+                  leftIconContainerStyle={styles.iconContainer}
+                  // value={state.server_url || ""}
+                  onChangeText={setServerUrl}
+                  errorMessage={errorServerUrl}
+              />
+            </KeyboardAvoidingView>
           </View>
           <View style={{paddingHorizontal: 6, paddingBottom: 36}}>
             <Button 

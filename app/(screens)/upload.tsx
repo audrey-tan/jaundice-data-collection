@@ -17,9 +17,7 @@ import axios from 'axios';
 
 const pageNum = 7;
 
-const URL = 'http://192.168.0.170:8000/newborn/';
-// const URL = 'http://10.15.2.4:8000/newborn/';
-// const URL = 'http://192.168.0.156:8000';
+const URL = '';
 
 export default function UploadScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

@@ -1,15 +1,13 @@
 import React, { createContext, useReducer } from 'react';
 
-
-
 const AppContext = createContext();
-
-
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'change_server_url':
+            return {...state, server_url: action.newValue};
         case 'change_page':
-            return {...state, page: action.newValue};
+                return {...state, page: action.newValue};
         case 'change_date':
             return {...state, dateOfBirth: action.newValue};
         case 'change_time':
@@ -34,8 +32,6 @@ function reducer(state, action) {
             return {...state, bilirubin: action.newValue};
     }
 }
-
-
 
 const AppProvider = ({children}) => {
     // const [page, setPage] = useState(0);
@@ -64,7 +60,5 @@ const AppProvider = ({children}) => {
         </AppContext.Provider>
     );
 }
-
-
 
 export {AppContext, AppProvider}

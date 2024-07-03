@@ -14,6 +14,7 @@ import {AppContext} from '../Context.js';
 import React, { useContext, useEffect } from 'react';
 import { RootStackParamList } from '../_layout.js';
 import { StackNavigationProp } from '@react-navigation/stack';
+import axios from 'axios';
 
 
 const pageNum = 0;
@@ -23,6 +24,8 @@ export default function HomeScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   
   const {state, dispatch} = useContext(AppContext);
+  const [serverUrl, setServerUrl] = React.useState("");
+  const [errorServerUrl, setErrorServerUrl] = React.useState("");
 
 
   function onScreenLoad() {
@@ -46,6 +49,24 @@ export default function HomeScreen() {
     return unsubcribe;
   }, [])
   
+  function next(){
+    // setErrorServerUrl("");
+    // console.log("a");
+    // console.log(serverUrl);
+    // console.log(serverUrl + "/ping/");
+    // axios.get(serverUrl + "/ping/").then(function(response){
+    //   console.log("b");
+    //   console.log(response.data);
+    //   setErrorServerUrl("");
+    // }).catch(function(err){
+    //   console.log(err);
+    //   setErrorServerUrl(err.toString());
+    // })
+    dispatch({type: 'change_page', newValue: pageNum+1})
+    
+    // @ts-ignore
+    navigation.navigate("(screens)" + state.pageRoutes[pageNum+1]);
+  }
 
   return (
         <View style={styles.innerContainer}>
@@ -56,26 +77,36 @@ export default function HomeScreen() {
               style={{width: 230, height: 204.5, marginBottom: 90, marginTop: 100}}
             />
             <Text style={[styles.headingText, {paddingTop: 0, textAlign: "center", fontSize: 36}]}>Add new data</Text>
-            <Text style={[styles.subheadingText, {paddingTop: 16, paddingBottom: 0, textAlign: "center"}]}>Number of data added: 0</Text>
+            <Input
+                labelStyle={styles.label}
+                inputStyle={styles.input}
+                placeholderTextColor="#B7B7B7"
+                label="Server address"
+                placeholder="http://192.168.0.2:8000"
+                leftIcon={<Icon name="dns" size={20} color="#B7B7B7"/>}
+                inputContainerStyle={styles.inputContainer}
+                leftIconContainerStyle={styles.iconContainer}
+                // value={state.server_url || ""}
+                onChangeText={setServerUrl}
+                errorMessage={errorServerUrl}
+            />
           </View>
           <View style={{paddingHorizontal: 6, paddingBottom: 36}}>
-            <Link href={state.pageRoutes[pageNum+1]} asChild> 
-              <Button 
-                ViewComponent={LinearGradient} 
-                linearGradientProps={{
-                  colors: ["#494FA0", "#6779D1"],
-                  start: { x: 0, y: 0.5},
-                  end: { x: 0.6, y: 0.5 },
-                }}
-                size="lg"
-                radius={8}
-                titleStyle={{fontFamily: "Roboto-Medium"}}
-                raised={true}
-                onPress={() => dispatch({type: 'change_page', newValue: pageNum+1})}
-              >
-                Start
-              </Button>
-            </Link>
+            <Button 
+              ViewComponent={LinearGradient} 
+              linearGradientProps={{
+                colors: ["#494FA0", "#6779D1"],
+                start: { x: 0, y: 0.5},
+                end: { x: 0.6, y: 0.5 },
+              }}
+              size="lg"
+              radius={8}
+              titleStyle={{fontFamily: "Roboto-Medium"}}
+              raised={true}
+              onPress={() => next()}
+            >
+              Start
+            </Button>
             
           </View>
         </View>

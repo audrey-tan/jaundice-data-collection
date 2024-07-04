@@ -24,7 +24,7 @@ export default function CameraScreen() {
 
   const {state, dispatch} = useContext(AppContext);
 
-  const [facing, setFacing] = useState('back');
+  const [flashMode, setFlashMode] = useState('off');
   const [permission, requestPermission] = useCameraPermissions();
 
   const cameraRef = useRef<CameraView>(null);
@@ -53,6 +53,13 @@ export default function CameraScreen() {
 
     let photo;
     for (let i = 0; i < 3; i++) {
+      setFlashMode('off');
+      photo = await cameraRef.current?.takePictureAsync({ base64: true });
+      dispatch({type: 'add_forehead', newValue: photo?.base64});
+    }
+
+    for (let i = 0; i < 3; i++) {
+      setFlashMode('on');
       photo = await cameraRef.current?.takePictureAsync({ base64: true });
       dispatch({type: 'add_forehead', newValue: photo?.base64});
     }
@@ -74,6 +81,8 @@ export default function CameraScreen() {
           <CameraView 
             style={{width: "100%", height: 400, marginBottom: 10, justifyContent: "flex-end"}} 
             ref={cameraRef}
+            // @ts-ignore
+            flash={flashMode}
           >
             <TouchableOpacity
               onPress={takePicture}

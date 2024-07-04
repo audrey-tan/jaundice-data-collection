@@ -63,7 +63,7 @@ export default function UploadScreen() {
   
 
   return (
-      <ScrollView contentContainerStyle={styles.innerContainer}>
+      <View style={styles.innerContainer}>
         <View></View>
         <View>
           {
@@ -107,6 +107,6 @@ export default function UploadScreen() {
             SUBMIT
           </Button>
         </View>
-      </ScrollView>
+      </View>
   );
 }

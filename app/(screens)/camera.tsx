@@ -1,5 +1,5 @@
 import { Link, useNavigation } from 'expo-router';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button, LinearProgress } from '@rneui/themed';
 import { CheckBox, Input } from '@rneui/base';
@@ -65,7 +65,7 @@ export default function CameraScreen() {
   }
 
   return (
-      <View style={styles.innerContainer}>
+      <ScrollView contentContainerStyle={styles.innerContainer}>
         <View>
           <Text style={[styles.headingText, {paddingTop: 40}]}>Forehead</Text>
           <Text style={[styles.subheadingText, {paddingTop: 20, paddingBottom: 1}]}>Place the color card on the newborn's forehead and take a picture</Text>
@@ -101,7 +101,7 @@ export default function CameraScreen() {
             </Button>
           </Link>          
         </View>
-      </View>
+      </ScrollView>
 
   );
 }

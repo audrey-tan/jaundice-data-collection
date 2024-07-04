@@ -1,5 +1,5 @@
 import { Link, useNavigation } from 'expo-router';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button, LinearProgress } from '@rneui/themed';
 import { CheckBox, Input } from '@rneui/base';
@@ -34,7 +34,7 @@ export default function MotherDataScreen() {
   } 
 
   return (
-      <View style={styles.innerContainer}>
+      <ScrollView contentContainerStyle={styles.innerContainer}>
         <View>
           <Text style={[styles.headingText, {paddingTop: 40}]}>Mother's skin tone</Text>
           <Text style={[styles.subheadingText, {paddingTop: 20, paddingBottom: 1}]}>Based on the Fitzpatrick scale</Text>
@@ -188,6 +188,6 @@ export default function MotherDataScreen() {
           </Button> 
           
         </View>
-      </View>
+      </ScrollView>
   );
 }

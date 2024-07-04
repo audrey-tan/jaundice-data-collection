@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button, LinearProgress, Image } from '@rneui/themed';
 import { CheckBox, Input } from '@rneui/base';
@@ -21,7 +21,7 @@ export default function SuccessScreen() {
   
 
   return (
-      <View style={styles.innerContainer}>
+      <ScrollView contentContainerStyle={styles.innerContainer}>
         <View></View>
         <View style={{alignItems: "center"}}>
           <LottieView
@@ -51,6 +51,6 @@ export default function SuccessScreen() {
           </Link>
           
         </View>
-      </View>
+      </ScrollView>
   );
 }

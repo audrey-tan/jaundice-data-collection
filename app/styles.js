@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
     },
     innerContainer: {
       width: "100%",
-      height: "100%",
+      // height: "100%",
       paddingHorizontal: 36,
       paddingBottom: 36,
       justifyContent: "space-between",
-      backgroundColor: "#F6F6F6"
+      backgroundColor: "#F6F6F6",
     },
     linearProgressContainer: {
       paddingTop: 42,

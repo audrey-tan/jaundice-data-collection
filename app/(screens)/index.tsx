@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { Link, useNavigation } from 'expo-router';
-import { View, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Text, Button, LinearProgress, Image } from '@rneui/themed';
 import { CheckBox, Input } from '@rneui/base';
@@ -69,7 +69,7 @@ export default function HomeScreen() {
   }
 
   return (
-        <View style={styles.innerContainer}>
+    <ScrollView contentContainerStyle={styles.innerContainer}>
           <View></View>
           <View style={{alignItems: "center"}}>
             <Image
@@ -111,6 +111,6 @@ export default function HomeScreen() {
             </Button>
             
           </View>
-        </View>
+        </ScrollView>
   );
 }

@@ -24,7 +24,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   
   const {state, dispatch} = useContext(AppContext);
-  const [serverUrl, setServerUrl] = React.useState("");
+  const [serverUrl, setServerUrl] = React.useState(state.serverUrl);
   const [errorServerUrl, setErrorServerUrl] = React.useState("");
 
 
@@ -51,66 +51,72 @@ export default function HomeScreen() {
   
   function next(){
     // setErrorServerUrl("");
-    // console.log("a");
+    console.log("a");
     // console.log(serverUrl);
     // console.log(serverUrl + "/ping/");
-    // axios.get(serverUrl + "/ping/").then(function(response){
-    //   console.log("b");
-    //   console.log(response.data);
-    //   setErrorServerUrl("");
-    // }).catch(function(err){
-    //   console.log(err);
-    //   setErrorServerUrl(err.toString());
-    // })
-    dispatch({type: 'change_page', newValue: pageNum+1})
+    setErrorServerUrl("Loading...");
+    axios.get(serverUrl + "/ping/").then(function(response){
+      console.log(response.data);
+      if(response.data === "Jaundice app OK"){
+        dispatch({type: 'change_page', newValue: pageNum+1});
+        dispatch({type: 'change_server_url', newValue: serverUrl});
+        setErrorServerUrl("");
+        // @ts-ignore
+        navigation.navigate("(screens)" + state.pageRoutes[pageNum+1]);
+      }else{
+        setErrorServerUrl("Invalid service");
+      }
+    }).catch(function(err){
+      console.log(err);
+      setErrorServerUrl(err.toString());
+    })
+    // 
     
-    // @ts-ignore
-    navigation.navigate("(screens)" + state.pageRoutes[pageNum+1]);
+    
   }
 
   return (
     <ScrollView contentContainerStyle={styles.innerContainer}>
-          <View></View>
-          <View style={{alignItems: "center"}}>
-            <Image
-              source={require('../../assets/images/baby.png')}
-              style={{width: 230, height: 204.5, marginBottom: 70, marginTop: 120}}
+      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={64} style={{width: "100%"}}>
+        <View></View>
+        <View style={{alignItems: "center"}}>
+          <Image
+            source={require('../../assets/images/baby.png')}
+            style={{width: 230, height: 204.5, marginBottom: 70, marginTop: 120}}
+          />
+          <Text style={[styles.headingText, {paddingTop: 0, paddingBottom: 16, textAlign: "center", fontSize: 36}]}>Add new data</Text>
+            <Input
+                labelStyle={styles.label}
+                inputStyle={styles.input}
+                placeholderTextColor="#B7B7B7"
+                label="Server address"
+                placeholder="http://192.168.0.2:8000"
+                leftIcon={<Icon name="dns" size={20} color="#B7B7B7"/>}
+                inputContainerStyle={styles.inputContainer}
+                leftIconContainerStyle={styles.iconContainer}
+                onChangeText={setServerUrl}
+                errorMessage={errorServerUrl}
             />
-            <Text style={[styles.headingText, {paddingTop: 0, paddingBottom: 16, textAlign: "center", fontSize: 36}]}>Add new data</Text>
-            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={64} style={{width: "100%"}}>
-              <Input
-                  labelStyle={styles.label}
-                  inputStyle={styles.input}
-                  placeholderTextColor="#B7B7B7"
-                  label="Server address"
-                  placeholder="http://192.168.0.2:8000"
-                  leftIcon={<Icon name="dns" size={20} color="#B7B7B7"/>}
-                  inputContainerStyle={styles.inputContainer}
-                  leftIconContainerStyle={styles.iconContainer}
-                  // value={state.server_url || ""}
-                  onChangeText={setServerUrl}
-                  errorMessage={errorServerUrl}
-              />
-            </KeyboardAvoidingView>
-          </View>
-          <View style={{paddingHorizontal: 6, paddingBottom: 36}}>
-            <Button 
-              ViewComponent={LinearGradient} 
-              linearGradientProps={{
-                colors: ["#494FA0", "#6779D1"],
-                start: { x: 0, y: 0.5},
-                end: { x: 0.6, y: 0.5 },
-              }}
-              size="lg"
-              radius={8}
-              titleStyle={{fontFamily: "Roboto-Medium"}}
-              raised={true}
-              onPress={() => next()}
-            >
-              Start
-            </Button>
-            
-          </View>
-        </ScrollView>
+        </View>
+        <View style={{paddingHorizontal: 6, paddingBottom: 36}}>
+          <Button 
+            ViewComponent={LinearGradient} 
+            linearGradientProps={{
+              colors: ["#494FA0", "#6779D1"],
+              start: { x: 0, y: 0.5},
+              end: { x: 0.6, y: 0.5 },
+            }}
+            size="lg"
+            radius={8}
+            titleStyle={{fontFamily: "Roboto-Medium"}}
+            raised={true}
+            onPress={next}
+          >
+            Start
+          </Button>
+          
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

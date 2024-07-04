@@ -5,7 +5,7 @@ const AppContext = createContext();
 function reducer(state, action) {
     switch (action.type) {
         case 'change_server_url':
-            return {...state, server_url: action.newValue};
+            return {...state, serverUrl: action.newValue};
         case 'change_page':
                 return {...state, page: action.newValue};
         case 'change_date':
@@ -50,7 +50,8 @@ const AppProvider = ({children}) => {
             kramer: 0,
             foreheads: [],
             jaundice: 0, // 0: no, 1: yes
-            bilirubin: 0
+            bilirubin: 0,
+            serverUrl: ""
         }
     )
 

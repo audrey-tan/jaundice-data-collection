@@ -17,12 +17,13 @@ import axios from 'axios';
 
 const pageNum = 7;
 
-const URL = '';
+// const URL = '';
 
 export default function UploadScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const {state, dispatch} = useContext(AppContext);
+  const [uploading, setUploading] = React.useState(false);
 
   const data = {
     dateOfBirth: state.dateOfBirth,
@@ -39,10 +40,12 @@ export default function UploadScreen() {
   
     
   function submit() {
+    const URL = `${state.serverUrl}/newborn/`;
+    setUploading(true);
     axios.post(URL, data)
       .then(response => {
         console.log(response.data);
-
+        setUploading(false);
         dispatch({type: 'change_page', newValue: pageNum+1})
         // @ts-ignore
         navigation.navigate("(screens)" + state.pageRoutes[pageNum+1]);
@@ -52,6 +55,7 @@ export default function UploadScreen() {
         if (error.response) console.log("error response ", error.response.data)
         else if (error.request) console.log("error request ", error.request)
         else console.log("error message ", error.message)
+        setUploading(false);
       })
   }
 
@@ -62,8 +66,15 @@ export default function UploadScreen() {
       <View style={styles.innerContainer}>
         <View></View>
         <View>
-          <Text style={[styles.headingText, {paddingTop: 0}]}>Upload data</Text>
-          <Text style={[styles.subheadingText, {paddingTop: 16, paddingBottom: 0}]}>Press submit below to upload</Text>
+          {
+            uploading ? 
+              <Text style={[styles.headingText, {paddingTop: 0}]}>Uploading...</Text>
+            : 
+              <>
+                <Text style={[styles.headingText, {paddingTop: 0}]}>Upload data</Text>
+                <Text style={[styles.subheadingText, {paddingTop: 16, paddingBottom: 0}]}>Press submit below to upload</Text>
+              </>
+          }
         </View>
         <View style={styles.buttonContainer}>
           <Link href={state.pageRoutes[pageNum-1]} asChild> 
@@ -73,6 +84,7 @@ export default function UploadScreen() {
               titleStyle={{fontFamily: "Roboto-Medium", color: "#6779D1"}}
               buttonStyle={{width: 145, alignSelf: "flex-start", borderWidth: 1.2, borderColor: "#6779D1"}}
               onPress={() => dispatch({type: 'change_page', newValue: pageNum-1})}
+              disabled={uploading}
             >
               Previous
             </Button>
@@ -90,6 +102,7 @@ export default function UploadScreen() {
             buttonStyle={{width: 145, alignSelf: "flex-end"}}
             raised={true}
             onPress={() => submit()}
+            disabled={uploading}
           >
             SUBMIT
           </Button>

@@ -35,7 +35,8 @@ export default function UploadScreen() {
     kramer: state.kramer,
     foreheads: state.foreheads,
     jaundice: state.jaundice,
-    bilirubin: state.bilirubin
+    bilirubin: state.bilirubin,
+    device: state.device
 }
   
     
@@ -44,6 +45,8 @@ export default function UploadScreen() {
     setUploading(true);
     axios.post(URL, data)
       .then(response => {
+        console.log(state.device)
+
         console.log(response.data);
         setUploading(false);
         dispatch({type: 'change_page', newValue: pageNum+1})
@@ -63,7 +66,7 @@ export default function UploadScreen() {
   
 
   return (
-      <View style={styles.innerContainer}>
+      <View style={[styles.innerContainer, {height: "100%"}]}>
         <View></View>
         <View>
           {

@@ -15,6 +15,7 @@ import React, { useContext, useEffect } from 'react';
 import { RootStackParamList } from '../_layout.js';
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from 'axios';
+import * as Device from 'expo-device'
 
 
 const pageNum = 0;
@@ -40,6 +41,9 @@ export default function HomeScreen() {
     dispatch({type: 'clear_foreheads'})
     dispatch({type: 'change_jaundice', newValue: 0})
     dispatch({type: 'change_bilirubin', newValue: 0})
+
+    let device = Device.manufacturer + " " + Device.modelName;
+    dispatch({type: 'change_device', newValue: device})
   }
 
   useEffect(() => {

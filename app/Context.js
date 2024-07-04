@@ -30,6 +30,8 @@ function reducer(state, action) {
             return {...state, jaundice: action.newValue};
         case 'change_bilirubin':
             return {...state, bilirubin: action.newValue};
+        case 'change_device':
+            return {...state, device: action.newValue};
     }
 }
 
@@ -51,7 +53,8 @@ const AppProvider = ({children}) => {
             foreheads: [],
             jaundice: 0, // 0: no, 1: yes
             bilirubin: 0,
-            serverUrl: ""
+            serverUrl: "",
+            device: ""
         }
     )
 
